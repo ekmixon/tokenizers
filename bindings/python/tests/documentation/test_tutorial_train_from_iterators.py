@@ -94,8 +94,7 @@ class TestTrainFromIterators:
         def gzip_iterator():
             for path in files:
                 with gzip.open(path, "rt") as f:
-                    for line in f:
-                        yield line
+                    yield from f
 
         tokenizer.train_from_iterator(gzip_iterator(), trainer=trainer)
         # END multi_gzip

@@ -16,10 +16,7 @@ class BaseTokenizer:
         self._parameters = parameters if parameters is not None else {}
 
     def __repr__(self):
-        return "Tokenizer(vocabulary_size={}, {})".format(
-            self._tokenizer.get_vocab_size(),
-            ", ".join(k + "=" + str(v) for k, v in self._parameters.items()),
-        )
+        return f'Tokenizer(vocabulary_size={self._tokenizer.get_vocab_size()}, {", ".join(f"{k}={str(v)}" for k, v in self._parameters.items())})'
 
     def num_special_tokens_to_add(self, is_pair: bool) -> int:
         """

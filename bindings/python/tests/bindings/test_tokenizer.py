@@ -322,7 +322,7 @@ class TestTokenizer:
 
         # Can pad to the longest in a batch
         output = tokenizer.encode_batch(["my name", "my name is john"])
-        assert all([len(encoding) == 4 for encoding in output])
+        assert all(len(encoding) == 4 for encoding in output)
 
         # Can pad to the specified length otherwise
         tokenizer.enable_padding(length=4)

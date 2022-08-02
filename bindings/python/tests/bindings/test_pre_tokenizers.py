@@ -38,7 +38,7 @@ class TestByteLevel:
 
         # Modify these
         pretok.add_prefix_space = True
-        assert pretok.add_prefix_space == True
+        assert pretok.add_prefix_space
 
     def test_manual_reload(self):
         byte_level = ByteLevel()
@@ -108,7 +108,7 @@ class TestMetaspace:
         pretok.replacement = "%"
         assert pretok.replacement == "%"
         pretok.add_prefix_space = True
-        assert pretok.add_prefix_space == True
+        assert pretok.add_prefix_space
 
 
 class TestCharDelimiterSplit:
@@ -181,7 +181,7 @@ class TestDigits:
 
         # Modify these
         pretok.individual_digits = True
-        assert pretok.individual_digits == True
+        assert pretok.individual_digits
 
 
 class TestUnicodeScripts:
@@ -221,6 +221,9 @@ class TestCustomPreTokenizer:
         ]
 
     def test_camel_case(self):
+
+
+
         class CamelCasePretok:
             def get_state(self, c):
                 if c.islower():
@@ -241,11 +244,9 @@ class TestCustomPreTokenizer:
                     c_state = self.get_state(c)
                     if state == "any":
                         state = c_state
-                    if state != "rest" and state == c_state:
-                        pass
-                    elif state == "upper" and c_state == "lower":
-                        pass
-                    else:
+                    if (state == "rest" or state != c_state) and (
+                        state != "upper" or c_state != "lower"
+                    ):
                         pieces.append(normalized[i:j])
                         i = j
                     state = c_state
@@ -254,6 +255,7 @@ class TestCustomPreTokenizer:
 
             def pre_tokenize(self, pretok):
                 pretok.split(self.split)
+
 
         camel = PreTokenizer.custom(CamelCasePretok())
 

@@ -60,11 +60,11 @@ class TestBPE:
         model.unk_token = "<unk>"
         assert model.unk_token == "<unk>"
         model.continuing_subword_prefix = None
-        assert model.continuing_subword_prefix == None
+        assert model.continuing_subword_prefix is None
         model.end_of_word_suffix = "suff"
         assert model.end_of_word_suffix == "suff"
         model.fuse_unk = True
-        assert model.fuse_unk == True
+        assert model.fuse_unk
 
 
 class TestWordPiece:

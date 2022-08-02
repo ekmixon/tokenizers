@@ -45,17 +45,17 @@ class TestBPETrainer:
         trainer.min_frequency = 1
         assert trainer.min_frequency == 1
         trainer.show_progress = True
-        assert trainer.show_progress == True
+        assert trainer.show_progress
         trainer.special_tokens = []
-        assert trainer.special_tokens == []
+        assert not trainer.special_tokens
         trainer.limit_alphabet = None
-        assert trainer.limit_alphabet == None
+        assert trainer.limit_alphabet is None
         trainer.initial_alphabet = ["d", "z"]
         assert sorted(trainer.initial_alphabet) == ["d", "z"]
         trainer.continuing_subword_prefix = None
-        assert trainer.continuing_subword_prefix == None
+        assert trainer.continuing_subword_prefix is None
         trainer.end_of_word_suffix = None
-        assert trainer.continuing_subword_prefix == None
+        assert trainer.continuing_subword_prefix is None
 
 
 class TestWordPieceTrainer:
@@ -89,17 +89,17 @@ class TestWordPieceTrainer:
         trainer.min_frequency = 1
         assert trainer.min_frequency == 1
         trainer.show_progress = True
-        assert trainer.show_progress == True
+        assert trainer.show_progress
         trainer.special_tokens = []
-        assert trainer.special_tokens == []
+        assert not trainer.special_tokens
         trainer.limit_alphabet = None
-        assert trainer.limit_alphabet == None
+        assert trainer.limit_alphabet is None
         trainer.initial_alphabet = ["d", "z"]
         assert sorted(trainer.initial_alphabet) == ["d", "z"]
         trainer.continuing_subword_prefix = None
-        assert trainer.continuing_subword_prefix == None
+        assert trainer.continuing_subword_prefix is None
         trainer.end_of_word_suffix = None
-        assert trainer.continuing_subword_prefix == None
+        assert trainer.continuing_subword_prefix is None
 
 
 class TestWordLevelTrainer:
@@ -122,9 +122,9 @@ class TestWordLevelTrainer:
         trainer.min_frequency = 1
         assert trainer.min_frequency == 1
         trainer.show_progress = True
-        assert trainer.show_progress == True
+        assert trainer.show_progress
         trainer.special_tokens = []
-        assert trainer.special_tokens == []
+        assert not trainer.special_tokens
 
 
 class TestUnigram:
@@ -234,8 +234,8 @@ class TestUnigram:
         trainer.vocab_size = 20000
         assert trainer.vocab_size == 20000
         trainer.show_progress = True
-        assert trainer.show_progress == True
+        assert trainer.show_progress
         trainer.special_tokens = []
-        assert trainer.special_tokens == []
+        assert not trainer.special_tokens
         trainer.initial_alphabet = ["d", "z"]
         assert sorted(trainer.initial_alphabet) == ["d", "z"]

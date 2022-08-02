@@ -32,10 +32,9 @@ class SentencePieceExtractor:
         # Merges
         merges = []
         for piece_l in tqdm(vocab.keys(), total=sp.GetPieceSize()):
-            for piece_r in vocab.keys():
+            for piece_r in vocab:
                 merge = f"{piece_l}{piece_r}"
-                piece_id = vocab.get(merge, None)
-                if piece_id:
+                if piece_id := vocab.get(merge, None):
                     merges += [(piece_l, piece_r, piece_id)]
         merges = sorted(merges, key=lambda val: val[2])
         merges = [(val[0], val[1]) for val in merges]
@@ -120,7 +119,7 @@ if __name__ == "__main__":
         if args.model.startswith("http"):
             # Saving model
             with NamedTemporaryFile("wb", delete=False) as f:
-                logger.info("Writing content from {} to {}".format(args.model, f.name))
+                logger.info(f"Writing content from {args.model} to {f.name}")
                 response = get(args.model, allow_redirects=True)
                 f.write(response.content)
 

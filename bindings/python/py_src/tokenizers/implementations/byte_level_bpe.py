@@ -54,7 +54,7 @@ class ByteLevelBPETokenizer(BaseTokenizer):
             normalizers += [Lowercase()]
 
         # Create the normalizer structure
-        if len(normalizers) > 0:
+        if normalizers:
             if len(normalizers) > 1:
                 tokenizer.normalizer = Sequence(normalizers)
             else:

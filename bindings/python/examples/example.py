@@ -114,7 +114,7 @@ print(f"SpeedUp Ratio: {time_p / time_r}")
 
 ids_r = [sentence.ids for sentence in encoded_r]
 diff_ids = 0
-for i in range(0, len(encoded_r)):
+for i in range(len(encoded_r)):
     if encoded_r[i].ids != encoded_p[i]:
         diff_ids += 1
         if args.debug:
@@ -129,7 +129,7 @@ print(f"Ids differences: {diff_ids}")
 decoded_r = tok_r.decode_batch([sentence.ids for sentence in encoded_r], False)
 decoded_p = [tok_p.decode(en) for en in encoded_p]
 diff_decoded = 0
-for i in range(0, len(text)):
+for i in range(len(text)):
     if decoded_r[i] != decoded_p[i]:
         diff_decoded += 1
         if args.debug:

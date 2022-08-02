@@ -18,10 +18,7 @@ GLOBALNAME = "$GLOBAL$"
 
 def update(d, u):
     for k, v in u.items():
-        if isinstance(v, abc.Mapping):
-            d[k] = update(d.get(k, {}), v)
-        else:
-            d[k] = v
+        d[k] = update(d.get(k, {}), v) if isinstance(v, abc.Mapping) else v
     return d
 
 
@@ -118,7 +115,7 @@ class AllEntities:
         for node in node.children:
             if language is None and node.tagname != "paragraph":
                 raise Exception(f"Expected language name:\n.. entities:: <LANGUAGE>")
-            elif language is None and node.tagname == "paragraph":
+            elif language is None:
                 language = str(node.children[0])
                 if language not in LANGUAGES:
                     raise Exception(

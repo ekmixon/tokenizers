@@ -111,8 +111,7 @@ class SpmConverter(Converter):
         tokenizer.decoder = decoders.Metaspace(
             replacement=replacement, add_prefix_space=add_prefix_space
         )
-        post_processor = self.post_processor(tokenizer)
-        if post_processor:
+        if post_processor := self.post_processor(tokenizer):
             tokenizer.post_processor = post_processor
 
         # TODO what parameters should we give ?
@@ -244,8 +243,7 @@ class XLMRobertaConverter(SpmConverter):
         return vocab
 
     def unk_id(self, proto):
-        unk_id = 3
-        return unk_id
+        return 3
 
     def post_processor(self, tokenizer):
         return TemplateProcessing(
@@ -362,9 +360,10 @@ def check(pretrained, filename):
             trans_total_time += trans - start
             tok_total_time += tok - trans
 
-            if ids != tok_ids:
-                if check_details(line, ids, tok_ids, transformer_tokenizer, tokenizer):
-                    continue
+            if ids != tok_ids and check_details(
+                line, ids, tok_ids, transformer_tokenizer, tokenizer
+            ):
+                continue
             assert ids == tok_ids, f"Error in line {i}: {line} {ids} != {tok_ids}"
 
     tokenizer.save(f"{pretrained.replace('/', '-')}.json")

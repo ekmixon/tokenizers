@@ -103,7 +103,6 @@ class EncodingVisualizer:
         self.tokenizer = tokenizer
         self.default_to_notebook = default_to_notebook
         self.annotation_coverter = annotation_converter
-        pass
 
     def __call__(
         self,
@@ -166,9 +165,8 @@ class EncodingVisualizer:
             return {}
         labels = set(map(lambda x: x.label, annotations))
         num_labels = len(labels)
-        h_step = int(255 / num_labels)
-        if h_step < 20:
-            h_step = 20
+        h_step = 255 // num_labels
+        h_step = max(h_step, 20)
         s = 32
         l = 64
         h = 10
@@ -247,9 +245,7 @@ class EncodingVisualizer:
             # e.g. white space
             css_classes.append("non-token")
         css = f'''class="{' '.join(css_classes)}"'''
-        data = ""
-        for key, val in data_items.items():
-            data += f' data-{key}="{val}"'
+        data = "".join(f' data-{key}="{val}"' for key, val in data_items.items())
         return f"<span {css} {data} >{span_text}</span>"
 
     @staticmethod
@@ -317,8 +313,7 @@ class EncodingVisualizer:
                 encoding=encoding,
             )
         )
-        res = HTMLBody(spans)  # Send the list of spans to the body of our html
-        return res
+        return HTMLBody(spans)
 
     @staticmethod
     def __make_anno_map(text: str, annotations: AnnotationList) -> PartialIntList:

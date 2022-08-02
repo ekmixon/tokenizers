@@ -56,13 +56,13 @@ class TestBertNormalizer:
 
         # Modify these
         normalizer.clean_text = False
-        assert normalizer.clean_text == False
+        assert not normalizer.clean_text
         normalizer.handle_chinese_chars = False
-        assert normalizer.handle_chinese_chars == False
+        assert not normalizer.handle_chinese_chars
         normalizer.strip_accents = None
-        assert normalizer.strip_accents == None
+        assert normalizer.strip_accents is None
         normalizer.lowercase = False
-        assert normalizer.lowercase == False
+        assert not normalizer.lowercase
 
 
 class TestSequence:
@@ -123,9 +123,9 @@ class TestStrip:
 
         # Modify these
         normalizer.left = False
-        assert normalizer.left == False
+        assert not normalizer.left
         normalizer.right = False
-        assert normalizer.right == False
+        assert not normalizer.right
 
 
 class TestCustomNormalizer:

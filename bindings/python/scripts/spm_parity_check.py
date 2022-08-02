@@ -96,7 +96,7 @@ def check_train(args):
     tokenizer_tokens = 0
 
     with open(args.input_file, "r") as f:
-        for i, line in enumerate(f):
+        for line in f:
             line = line.strip()
             ids = sp.EncodeAsIds(line)
 
@@ -105,8 +105,8 @@ def check_train(args):
             spm_tokens += len(ids)
             tokenizer_tokens += len(encoded.ids)
 
-    vocab = [0 for i in range(args.vocab_size)]
-    spm_vocab = [0 for i in range(args.vocab_size)]
+    vocab = [0 for _ in range(args.vocab_size)]
+    spm_vocab = [0 for _ in range(args.vocab_size)]
 
     for token, index in tokenizer.get_vocab().items():
         vocab[index] = token
@@ -139,15 +139,7 @@ def check_diff(spm_diff, tok_diff, sp, tok):
         return True
     spm_reencoded = sp.encode(sp.decode(spm_diff))
     tok_reencoded = tok.encode(tok.decode(spm_diff)).ids
-    if spm_reencoded != spm_diff and spm_reencoded == tok_reencoded:
-        # Type 3 error.
-        # Snehagatha ->
-        #       Sne, h, aga, th, a
-        #       Sne, ha, gat, ha
-        # Encoding the wrong with sp does not even recover what spm gave us
-        # It fits tokenizer however...
-        return True
-    return False
+    return spm_reencoded != spm_diff and spm_reencoded == tok_reencoded
 
 
 def check_details(line, spm_ids, tok_ids, sp, tok):
@@ -249,22 +241,20 @@ def check_encode(args):
             spm_total_time += spm_time - start
             tok_total_time += tok_time - spm_time
 
-            if args.verbose:
-                if i % 10000 == 0:
-                    print(
-                        f"({perfect} / {imperfect} / {wrong} ----- {perfect + imperfect + wrong})"
-                    )
-                    print(f"SPM: {spm_total_time} - TOK: {tok_total_time}")
+            if args.verbose and i % 10000 == 0:
+                print(
+                    f"({perfect} / {imperfect} / {wrong} ----- {perfect + imperfect + wrong})"
+                )
+                print(f"SPM: {spm_total_time} - TOK: {tok_total_time}")
 
-            if ids != encoded.ids:
-                if check_details(line, ids, encoded.ids, sp, tok):
-                    imperfect += 1
-                    continue
-                else:
-                    wrong += 1
-            else:
+            if ids == encoded.ids:
                 perfect += 1
 
+            elif check_details(line, ids, encoded.ids, sp, tok):
+                imperfect += 1
+                continue
+            else:
+                wrong += 1
             assert ids == encoded.ids, f"line {i}: {line} : \n\n{ids}\n{encoded.ids}\n{list(zip(encoded.ids, encoded.tokens))}"
 
     print(f"({perfect} / {imperfect} / {wrong} ----- {perfect + imperfect + wrong})")

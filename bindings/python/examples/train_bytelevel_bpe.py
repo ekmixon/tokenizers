@@ -48,10 +48,11 @@ tokenizer.save_model(args.out, args.name)
 
 # Restoring model from learned vocab/merges
 tokenizer = ByteLevelBPETokenizer(
-    join(args.out, "{}-vocab.json".format(args.name)),
-    join(args.out, "{}-merges.txt".format(args.name)),
+    join(args.out, f"{args.name}-vocab.json"),
+    join(args.out, f"{args.name}-merges.txt"),
     add_prefix_space=True,
 )
+
 
 # Test encoding
 print(tokenizer.encode("Training ByteLevel BPE is very easy").tokens)

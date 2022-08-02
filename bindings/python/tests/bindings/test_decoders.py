@@ -50,7 +50,7 @@ class TestWordPiece:
         decoder.prefix = "__"
         assert decoder.prefix == "__"
         decoder.cleanup = True
-        assert decoder.cleanup == True
+        assert decoder.cleanup
 
 
 class TestMetaspace:
@@ -80,7 +80,7 @@ class TestMetaspace:
         decoder.replacement = "&"
         assert decoder.replacement == "&"
         decoder.add_prefix_space = True
-        assert decoder.add_prefix_space == True
+        assert decoder.add_prefix_space
 
 
 class TestBPEDecoder:
@@ -149,4 +149,4 @@ class TestCTCDecoder:
         assert decoder.word_delimiter_token == "_"
 
         decoder.cleanup = False
-        assert decoder.cleanup == False
+        assert not decoder.cleanup

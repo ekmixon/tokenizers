@@ -40,23 +40,19 @@ class RustRef:
         return f"https://docs.rs/tokenizers/{rust_version}"
 
     def make_struct_link(self, parts, title):
-        link = ""
         struct_name = parts[-1]
         path = parts[:-1]
 
-        for p in path:
-            link += f"/{p}"
+        link = "".join(f"/{p}" for p in path)
         link += f"/struct.{struct_name}.html"
 
         return link, title
 
     def make_func_link(self, parts, title):
-        link = ""
         fn_name = parts[-1]
 
         path = parts[:-1]
-        for p in path:
-            link += f"/{p}"
+        link = "".join(f"/{p}" for p in path)
         link += f"/fn.{fn_name}.html"
 
         return link, title
@@ -75,12 +71,10 @@ class RustRef:
         return link, title
 
     def make_trait_link(self, parts, title):
-        link = ""
         trait_name = parts[-1]
 
         path = parts[:-1]
-        for p in path:
-            link += f"/{p}"
+        link = "".join(f"/{p}" for p in path)
         link += f"/trait.{trait_name}.html"
 
         return link, title

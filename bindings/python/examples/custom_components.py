@@ -11,13 +11,10 @@ from tokenizers.decoders import Decoder
 
 class JiebaPreTokenizer:
     def jieba_split(self, i: int, normalized_string: NormalizedString) -> List[NormalizedString]:
-        splits = []
-        # we need to call `str(normalized_string)` because jieba expects a str,
-        # not a NormalizedString
-        for token, start, stop in jieba.tokenize(str(normalized_string)):
-            splits.append(normalized_string[start:stop])
-
-        return splits
+        return [
+            normalized_string[start:stop]
+            for token, start, stop in jieba.tokenize(str(normalized_string))
+        ]
         # We can also easily do it in one line:
         # return [normalized_string[w[1] : w[2]] for w in jieba.tokenize(str(normalized_string))]
 
